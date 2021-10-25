@@ -49,8 +49,6 @@ aws ec2 authorize-security-group-ingress --group-id $SG_ID --protocol tcp --port
 
 ## Instances management
 
-### Create launch template
-
 ```
 aws ec2 create-launch-template --launch-template-name KmaHighloadTemplate --version-description AutoScalingVersion1 --launch-template-data '{"NetworkInterfaces":[{"DeviceIndex":0,"AssociatePublicIpAddress":true,"Groups":["$SG_ID"],"DeleteOnTermination":true}],"ImageId":"ami-0ff8a91507f77f867","InstanceType":"t3.micro","TagSpecifications":[{"ResourceType":"instance","Tags":[{"Key":"Name","Value":"KmaASG"}]}],"BlockDeviceMappings":[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":15}}]}' --region us-east-1
 
