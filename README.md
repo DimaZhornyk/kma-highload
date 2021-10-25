@@ -1,4 +1,4 @@
-##VPC
+## VPC
 ```
 aws ec2 create-vpc --cidr-block 10.10.0.0/18 --no-amazon-provided-ipv6-cidr-block --tag-specifications 'ResourceType=vpc,Tags=[{Key=Name,Value=kma-genesis},{Key=Lesson,Value=public-clouds}]' --query Vpc.VpcId --output text
 ```
@@ -6,7 +6,7 @@ aws ec2 create-vpc --cidr-block 10.10.0.0/18 --no-amazon-provided-ipv6-cidr-bloc
 
 ---
 
-###Subnets
+### Subnets
 ```
 aws ec2 create-subnet --vpc-id $VPC_ID --availability-zone us-east-1a --cidr-block 10.10.1.0/24
 ```
@@ -23,7 +23,7 @@ aws ec2 create-subnet --vpc-id $VPC_ID --availability-zone us-east-1c --cidr-blo
 
 ---
 
-###IGW
+### IGW
 ```
 aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text
 ```
@@ -34,7 +34,7 @@ aws ec2 attach-internet-gateway --internet-gateway-id $IG_ID --vpc-id $VPC_ID
 ```
 ---
 
-###Security group
+### Security group
 ```
 aws ec2 create-security-group --group-name kma-highload-sg --description "kma highload sh" --vpc-id $VPC_ID
 ```
@@ -53,7 +53,7 @@ aws ec2 authorize-security-group-ingress --group-id $SG_ID --protocol tcp --port
 aws ec2 authorize-security-group-ingress --group-id $SG_ID --protocol tcp --port 443 --cidr  0.0.0.0/0
 ```
 
-##Instances management
+## Instances management
 
 ### Create launch template
 
