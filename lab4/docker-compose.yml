@@ -1,0 +1,63 @@
+version: '3'
+services:
+  mysql:
+    container_name: app_mysql
+    image: mysql:8
+    restart: always
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ./mysql/.env
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  redis:
+    container_name: app_redis
+    image: "redis:6.2.6"
+    command: redis-server --requirepass root_pass
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  rabbitmq:
+    container_name: app_rabbitmq
+    image: rabbitmq:3.9.10
+    ports:
+      - "5672:5672"
+    restart: always
+    networks:
+      - app-network
+
+  backend:
+    container_name: app_backend
+    build:
+      context: .
+      dockerfile: Dockerfile.core
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mysql
+      - redis
+      - rabbitmq
+    networks:
+      - app-network
+
+  consumer:
+    container_name: app_consumer
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    depends_on:
+      - mysql
+      - redis
+      - rabbitmq
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
