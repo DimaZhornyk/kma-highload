@@ -11,6 +11,8 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '^1.16'
-      - run: cd core/core_service/src/app
-      - run: ls
-      - run: to test ./...
+      - name: Test Golang
+      working-directory: core/core_service/src/app
+      - run: |
+        go mod download
+        go test ./...
