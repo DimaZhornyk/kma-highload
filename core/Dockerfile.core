@@ -3,7 +3,7 @@ FROM golang:1.16-alpine
 WORKDIR /app
 
 COPY core/core_service/src /
-COPY docker/docker-entrypoint.sh docker-entrypoint.sh
+COPY docker/docker-entrypoint.sh /
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -v -o backend
 
