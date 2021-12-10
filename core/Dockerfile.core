@@ -1,5 +1,6 @@
 FROM golang:1.16-alpine
 
+RUN apk add build-base
 WORKDIR /app
 
 COPY core/core_service/src /
