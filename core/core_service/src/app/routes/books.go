@@ -55,7 +55,7 @@ func (a *API) GetBook(ctx echo.Context) error {
 
 	bookJson, err := a.s.Redis().Get(context.Background(), bookStr).Result()
 	if err != nil {
-		book, err := getBookFromDB(bookId, a.s)
+		book, err := GetBookFromDB(bookId, a.s)
 		if err != nil {
 			return ctx.JSON(http.StatusBadRequest, err.Error())
 		}
@@ -71,7 +71,7 @@ func (a *API) GetBook(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, book)
 }
 
-func getBookFromDB(bookId int, s core.Service) (*models.Book, error) {
+func GetBookFromDB(bookId int, s core.Service) (*models.Book, error) {
 	b := new(models.Book)
 	if err := s.DB().Model(b).Where("id = ?", bookId).First(b).Error; err != nil {
 		return nil, fmt.Errorf("book <%d> not found", bookId)
