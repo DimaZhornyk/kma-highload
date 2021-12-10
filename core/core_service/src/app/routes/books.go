@@ -65,7 +65,7 @@ func (a *API) GetBook(ctx echo.Context) error {
 
 	book := new(models.Book)
 	if err := json.Unmarshal([]byte(bookJson), book); err != nil {
-		return ctx.JSON(http.StatusInternalServerError, fmt.Sprintf("Error unmarshalling book with id <%s>", bookId))
+		return ctx.JSON(http.StatusInternalServerError, fmt.Sprintf("Error unmarshalling book with id <%d>", bookId))
 	}
 
 	return ctx.JSON(http.StatusOK, book)
